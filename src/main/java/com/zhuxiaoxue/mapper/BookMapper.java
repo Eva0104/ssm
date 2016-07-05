@@ -1,6 +1,7 @@
 package com.zhuxiaoxue.mapper;
 
 import com.zhuxiaoxue.pojo.Book;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,4 +20,7 @@ public interface BookMapper {
 
     Book findById(Integer id);
 
+    List<Book> findByPage(@Param("start") Integer start,@Param("size") Integer size);
+
+    Long count();
 }

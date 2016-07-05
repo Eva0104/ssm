@@ -7,6 +7,7 @@ import com.zhuxiaoxue.mapper.PublisherMapper;
 import com.zhuxiaoxue.pojo.Book;
 import com.zhuxiaoxue.pojo.BookType;
 import com.zhuxiaoxue.pojo.Publisher;
+import com.zhuxiaoxue.util.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -52,6 +53,15 @@ public class BookService {
 
     public void update(Book book){
         bookMapper.update(book);
+    }
+
+    public Page<Book> findBooksByPage(Integer p){
+        int totalSize = bookMapper.count().intValue();
+        Page<Book> page = new Page<>(totalSize,p,6);
+
+        List<Book> bookList = bookMapper.findByPage(page.getStart(),6);
+        page.setItems(bookList);
+        return page;
     }
 
 

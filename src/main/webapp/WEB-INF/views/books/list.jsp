@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${bookList}" var="book">
+                <c:forEach items="${page.items}" var="book">
                     <tr>
                         <td>${book.bookname}</td>
                         <td>${book.bookauthor}</td>
@@ -44,6 +44,24 @@
                 </c:forEach>
             </tbody>
         </table>
+        <ul id="page" class="pagination"></ul>
     </div>
+    <script src="/static/js/jquery-1.11.3.min.js"></script>
+    <script src="/static/js/jquery.twbsPagination.min.js"></script>
+    <script>
+        $(function(){
+            $(function(){
+                $("#page").twbsPagination({
+                    totalPages:${page.totalPageSize},
+                    first:'首页',
+                    prev:'<<',
+                    next:'>>',
+                    last:'末页',
+                    visiblePages:10,
+                    href:'?p={{number}}'
+                })
+            })
+        });
+    </script>
 </body>
 </html>
