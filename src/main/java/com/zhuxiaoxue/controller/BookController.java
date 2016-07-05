@@ -1,9 +1,11 @@
 package com.zhuxiaoxue.controller;
 
 
+import com.google.common.collect.Maps;
 import com.zhuxiaoxue.pojo.Book;
 import com.zhuxiaoxue.service.BookService;
 import com.zhuxiaoxue.util.Page;
+import com.zhuxiaoxue.util.Strings;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/books")
@@ -24,11 +27,29 @@ public class BookController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(@RequestParam(required = false,defaultValue = "1") Integer p,
+                       @RequestParam(required = false)String bookname,
+                       @RequestParam(required = false)String type,
+                       @RequestParam(required = false)String pub,
                        Model model){
 
-//        List<Book> bookList = bookService.findAllBooks();
-        Page<Book> page = bookService.findBooksByPage(p);
+        Map<String,Object> params = Maps.newHashMap();
+
+        bookname = Strings.toUTF8(bookname);
+
+        params.put("bookname",bookname);
+        params.put("type",type);
+        params.put("pub",pub);
+
+        Page<Book> page = bookService.findByParams(p,params);
+
         model.addAttribute("page",page);
+        model.addAttribute("bookPubList",bookService.findAllPub());
+        model.addAttribute("bookTypeList",bookService.findAllBookType());
+
+        model.addAttribute("bookname",bookname);
+        model.addAttribute("typeid",type);
+        model.addAttribute("pubid",pub);
+
         return "/books/list";
     }
 

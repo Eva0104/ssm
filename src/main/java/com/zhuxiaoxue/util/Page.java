@@ -44,6 +44,10 @@ public class Page<T> {
             this.pageNum = totalPageSize;
         }
 
+        if(this.pageNum <=0 ){
+            this.pageNum = 1;
+        }
+
         start = (this.pageNum - 1) * size;
 
     }
