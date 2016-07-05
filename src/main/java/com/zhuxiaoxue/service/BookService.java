@@ -2,7 +2,11 @@ package com.zhuxiaoxue.service;
 
 
 import com.zhuxiaoxue.mapper.BookMapper;
+import com.zhuxiaoxue.mapper.BookTypeMapper;
+import com.zhuxiaoxue.mapper.PublisherMapper;
 import com.zhuxiaoxue.pojo.Book;
+import com.zhuxiaoxue.pojo.BookType;
+import com.zhuxiaoxue.pojo.Publisher;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -15,6 +19,20 @@ public class BookService {
 
     @Inject
     private BookMapper bookMapper;
+
+    @Inject
+    private BookTypeMapper bookTypeMapper;
+
+    @Inject
+    private PublisherMapper publisherMapper;
+
+    public List<Publisher> findAllPub(){
+        return publisherMapper.findAll();
+    }
+
+    public List<BookType> findAllBookType(){
+        return bookTypeMapper.findAll();
+    }
 
     public Book findById(Integer id){
         return bookMapper.findById(id);
