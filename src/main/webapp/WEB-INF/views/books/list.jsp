@@ -60,7 +60,7 @@
                 <td>${book.bookType.booktype}</td>
                 <td>
                     <a href="/books/${book.id}/update">修改</a>
-                    <a href="/books/${book.id}/del">删除</a>
+                    <a href="javaScript:;" rel="${book.id}" class="delLink">删除</a>
                 </td>
             </tr>
         </c:forEach>
@@ -80,9 +80,18 @@
                 next: '>>',
                 last: '末页',
                 visiblePages: 10,
-                href: '?p={{number}}'
+                href: '?bookname=' + encodeURIComponent('${bookname}') + '&type=${typeid}&pub=${pubid}&p={{number}}'
             })
-        })
+        });
+
+        $(".delLink").click(function () {
+            var id = $(this).attr("rel");
+            if (confirm("确定要删除吗?")) {
+                window.location.href = "/books/"+id+"/del";
+            }
+        });
+
+
     });
 </script>
 </body>
